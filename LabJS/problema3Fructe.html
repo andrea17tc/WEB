@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Problema 3</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            background-color: pink;
+        }
+
+        td {
+            width: 100px; 
+            height: 100px; 
+            text-align: center;
+            vertical-align: middle;
+            border: 2px solid black;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        td img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .hidden {
+            color: pink;
+        }
+
+    </style>
+</head>
+<body>
+    <table id="game-board"></table>
+
+    <script>
+        var images =['pngegg.png','pngegg1.png','pngegg2.png','pngegg3.png','pngegg4.png','pngegg5.png','pngegg6.png','pngegg7.png','pngegg.png','pngegg1.png','pngegg2.png','pngegg3.png','pngegg4.png','pngegg5.png','pngegg6.png','pngegg7.png'];
+        images.sort(() => Math.random() - 0.5);
+                
+        var gameBoard = document.getElementById('game-board');
+        var firstCard, secondCard;
+        var matchedPairs = 0;
+
+        for (var i = 0; i < 4; i++) {
+            var row = document.createElement('tr');
+            for (var j = 0; j < 4; j++) {
+                var cell = document.createElement('td');
+                var img = document.createElement('img');
+                img.src = images[i * 4 + j];
+                img.style.display = 'none';
+                cell.appendChild(img);
+                cell.addEventListener('click', onCellClick);
+                row.appendChild(cell);
+            }
+            gameBoard.appendChild(row);
+        }
+       
+        function onCellClick() {
+            if (this.firstChild.style.display !== 'none' || (firstCard && secondCard)) return;
+            this.firstChild.style.display = 'block'; 
+            if (!firstCard) {
+                firstCard = this;
+            } else {
+                secondCard = this;
+                if (firstCard.firstChild.src === secondCard.firstChild.src) {
+                    firstCard = secondCard = null;
+                    matchedPairs++;
+                    if (matchedPairs === 8) {
+                        setTimeout(() => {
+                            alert('You won!');
+                        }, 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        firstCard.firstChild.style.display = 'none';
+                        secondCard.firstChild.style.display = 'none';
+                        firstCard = secondCard = null;
+                    }, 2000);
+                }
+            }
+        }
+
+
+    </script>
+</body>

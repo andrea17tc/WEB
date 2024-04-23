@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Problema 1</title>
+</html>
+<body>
+    <script>
+        function move1() {
+            var list1 = document.getElementById("list1");
+            var list2 = document.getElementById("list2");
+            var selected = list1.options[list1.selectedIndex];
+            list2.appendChild(selected);
+        }
+        function move2() {
+            var list1 = document.getElementById("list1");
+            var list2 = document.getElementById("list2");
+            var selected = list2.options[list2.selectedIndex];
+            list1.appendChild(selected);
+        }
+    </script>
+    <h1>Problema 1</h1>
+    <div style="text-align: center;">
+        <select id="list1" multiple ondblclick="move1()">
+            <option value="1">NR 1</option>
+            <option value="2">NR 2</option>
+            <option value="3">NR 3</option>
+            <option value="4">NR 4</option>
+        </select>
+        <select id="list2" multiple ondblclick="move2()">
+                <option id="6">NR 6</option>
+                <option id="7">NR 7</option>
+                <option id="8">NR 8</option>
+                <option id="9">NR 9</option>
+        </select>
+    </div>
+
+</body>
+</html>

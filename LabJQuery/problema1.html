@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Problema 1</title>
+</html>
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#move1").click(function(){
+            $("#list2").append($("#list1 option:selected"));
+        });
+
+        $("#move2").click(function(){
+            $("#list1").append($("#list2 option:selected"));
+        });
+    });
+</script>
+    <h1>Problema 1</h1>
+    <div style="text-align: center;">
+        <select id="list1" multiple ondblclick="move1()">
+            <option value="1">NR 1</option>
+            <option value="2">NR 2</option>
+            <option value="3">NR 3</option>
+            <option value="4">NR 4</option>
+        </select>
+        <select id="list2" multiple ondblclick="move2()">
+                <option id="6">NR 6</option>
+                <option id="7">NR 7</option>
+                <option id="8">NR 8</option>
+                <option id="9">NR 9</option>
+        </select>
+        <button id="move1">Move Right</button>
+<button id="move2">Move Left</button>
+
+<select id="list2" multiple></select>
+    </div>
+
+</body>
+</html>

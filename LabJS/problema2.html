@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Problema 2</title>
+</head>
+<body>
+    <script>
+        function validate(){
+            var name = document.getElementById('name').value;
+            var dateOfBirth = document.getElementById('dateOfBirth').value;
+            var age = document.getElementById('age').value;
+            var email = document.getElementById('email').value;
+            var error='';
+            if (name === '' && dateOfBirth === '' && age === '' && email === '') {
+                event.preventDefault();
+                alert('All fields are required');
+                return;
+            }
+            
+            if (name === '') {
+                event.preventDefault();
+                error = error+ 'Name is required' + '\n';
+                document.getElementById('name').style.border = '3px solid red';
+              
+            }
+            
+            if (dateOfBirth === '') {
+                event.preventDefault();
+                error = error+ 'Date of Birth is required' + '\n';
+                document.getElementById('dateOfBirth').style.border = '3px solid red';
+            }
+            
+            if (age === '') {
+                event.preventDefault();
+                error = error+ 'Age is required' + '\n';
+                document.getElementById('age').style.border = '3px solid red';
+              
+            }
+            
+            if (email === '') {
+                event.preventDefault();
+                error = error+ 'Email is required' + '\n';
+                alert(error);
+                document.getElementById('email').style.border = '3px solid red';
+             
+            }
+            if(email !== ''){
+                var atpos = email.indexOf("@");
+                var dotpos = email.lastIndexOf(".");
+                if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+                    event.preventDefault();
+                    error = error+ 'Email is not valid' + '\n';
+                    alert(error);
+                    // return false;
+                }
+            }
+            
+            else{
+                document.write("Date completate corect!");
+            }
+
+
+        }
+        
+    </script>
+
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth"><br><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="0"><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+        <input type="submit" value="Trimite" onclick="validate()">
+      </form>
+    
+</body>

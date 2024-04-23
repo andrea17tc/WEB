@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Puzzle Game</title>
+    <style>
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .empty {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <table id="puzzle"></table>
+
+    <script>
+        var n = 4; 
+        var emptyCell = {row: n - 1, col: n - 1}; 
+        var table = document.getElementById('puzzle');
+
+        var numbers = Array.from({length: n * n - 1}, (_, i) => i + 1);
+        numbers.push('');
+        for (var i = 0; i < n; i++) {
+            var row = document.createElement('tr');
+            for (var j = 0; j < n; j++) {
+                var cell = document.createElement('td');
+                cell.textContent = numbers[i * n + j];
+                if (cell.textContent === '') {
+                    cell.classList.add('empty');
+                }
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        }
+
+        directions = [
+            {dx: 0, dy: -1}, 
+            {dx: 0, dy: 1}, 
+            {dx: -1, dy: 0}, 
+            {dx: 1, dy: 0}
+        ];
+
+        for(var i=0;i<2;i++){
+            var randomDirection = directions[Math.floor(Math.random() * directions.length)];
+            moveEmptyCell(randomDirection.dx, randomDirection.dy);
+        }
+        
+
+        function moveEmptyCell(dx, dy) {
+            var newEmptyCell = {row: emptyCell.row + dy, col: emptyCell.col + dx};
+            if (newEmptyCell.row >= 0 && newEmptyCell.row < n && newEmptyCell.col >= 0 && newEmptyCell.col < n) {
+                var rows = table.rows;
+                var cell = rows[newEmptyCell.row].cells[newEmptyCell.col];
+                rows[emptyCell.row].cells[emptyCell.col].textContent = cell.textContent;
+                rows[emptyCell.row].cells[emptyCell.col].classList.remove('empty');
+                cell.textContent = '';
+                cell.classList.add('empty');
+                emptyCell = newEmptyCell;
+            }
+        }
+
+        window.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case 'ArrowUp':    moveEmptyCell(0, 1), checkWin(); break;
+                case 'ArrowDown':  moveEmptyCell(0, -1),checkWin(); break;
+                case 'ArrowLeft':  moveEmptyCell(1, 0),checkWin(); break;
+                case 'ArrowRight': moveEmptyCell(-1, 0),checkWin(); break;
+            }
+        });
+        function checkWin() {
+        var rows = table.rows;
+        var counter = 1;
+        for (var i = 0; i < n; i++) {
+            for (var j = 0; j < n; j++) {
+                if (rows[i].cells[j].textContent != counter.toString() && !(i == n - 1 && j == n - 1)) {
+                    return;
+                }
+                counter++;
+            }
+        }
+        setTimeout(() => {
+                            alert('You won!');
+                        }, 200);
+    }
+    </script>
+</body>
+</html>

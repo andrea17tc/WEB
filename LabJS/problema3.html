@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Problema 3</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            background-color: pink;
+        }
+
+        td {
+            width: 100px; 
+            height: 100px; 
+            text-align: center;
+            vertical-align: middle;
+            border: 2px solid black;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .hidden {
+            color: pink;
+        }
+
+    </style>
+</head>
+<body>
+    <table id="game-board"></table>
+
+    <script>
+        var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
+        numbers.sort(() => Math.random() - 0.5);
+
+        var gameBoard = document.getElementById('game-board');
+        var firstCard, secondCard;
+        var matchedPairs = 0;
+
+        for (var i = 0; i < 4; i++) {
+            var row = document.createElement('tr');
+            for (var j = 0; j < 4; j++) {
+                var cell = document.createElement('td');
+                cell.textContent = numbers[i * 4 + j];
+                cell.classList.add('hidden');
+                cell.addEventListener('click', onCellClick);
+                row.appendChild(cell);
+            }
+            gameBoard.appendChild(row);
+        }
+
+        function onCellClick() {
+            if (this.classList.contains('matched') || (firstCard && secondCard)) return;
+            this.classList.remove('hidden');
+            if (!firstCard) {
+                firstCard = this;
+            } else {
+                secondCard = this;
+                if (firstCard.textContent === secondCard.textContent) {
+                    firstCard.classList.add('matched');
+                    secondCard.classList.add('matched');
+                    firstCard = secondCard = null;
+                    matchedPairs++;
+                    if (matchedPairs === 8) {
+                        setTimeout(() => alert('You won!'), 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        firstCard.classList.add('hidden');
+                        secondCard.classList.add('hidden');
+                        firstCard = secondCard = null;
+                    }, 2000);
+                }
+            }
+        }
+    </script>
+</body>
